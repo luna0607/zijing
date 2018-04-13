@@ -13,6 +13,8 @@ Cookie: hide_filter=1; cookiesession1=2C0BC7512V0LLFHP9BZBQPFI80RDAD37; login="%
 '''
 
 import urllib.request
+
+import re
 from bs4 import BeautifulSoup
 
 try:
@@ -35,14 +37,25 @@ def get_zijing():
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/65.0.3325.181 Safari/537.36',
     }
-    req = urllib.request.Request(url="http://zijingbt.njuftp.org/stats.html?id=106991",
+    req = urllib.request.Request(url="http://zijingbt.njuftp.org/stats.html?id=92446&show=active#seeders",
                                  headers=headers)
     res = urllib.request.urlopen(req)
     data = res.read().decode("utf-8")
-    soup = BeautifulSoup(data,"html.parser")
-    print(soup.h3.string)
+    soup = BeautifulSoup(data, "html.parser")
+    file_name = soup.h3.string
+    file_torrent = soup.select("a.download_link")[0]["href"]
+    info_tr = soup.select("tr.file_info")[4]
+    file_uploader = info_tr.select("a")[1]["href"].split("=")[1]
+    file_upload_time = info_tr.select("td")[0].get_text().split("上传于")[1]
+    size_text = soup.select("tr.file_info")[3].select("td")[0].get_text()
+    file_size = re.match(r'大小: \n(.*?) \| 文件数', size_text).group(1)
+    seed_text = soup.select("tr.file_info")[5].select("td")[0].get_text()
+    file_seeding = re.findall(r'\d+', seed_text)[0]
+    file_downloading = re.findall(r'\d+', seed_text)[1]
+    file_downloaded = re.findall(r'\d+', seed_text)[2]
 
-
+    print(file_seeding + " " + file_downloading + " " + file_downloaded)
+    # print(soup.a["download_link"])
 
 
 get_zijing()
