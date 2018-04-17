@@ -25,7 +25,7 @@ except ImportError:
     from io import BytesIO
 
 
-def get_zijing(file_id, c):
+def get_zijing(user_id, c):
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
         # 'accept-encoding': " gzip, deflate",
@@ -40,7 +40,7 @@ def get_zijing(file_id, c):
                       'Chrome/65.0.3325.181 Safari/537.36',
     }
     req = urllib.request.Request(
-        url="http://zijingbt.njuftp.org/stats.html?id=" + str(file_id) + "&show=active#seeders",
+        url="http://zijingbt.njuftp.org/login.html?uid=" + str(user_id),
         headers=headers)
     res = urllib.request.urlopen(req)
     data = res.read().decode("utf-8")
@@ -48,42 +48,40 @@ def get_zijing(file_id, c):
     # print(soup.find_all("p", class_="not_exist"))
 
     if len(soup.find_all("p", class_="not_exist")) == 0:
-        file_name = soup.h3.string
-        file_torrent = soup.select("a.download_link")[0]["href"]
-        info_tr = soup.select("tr.file_info")[4]
-        print(info_tr.select("a"))
-        if len(info_tr.select("a"))>1:
-            file_uploader = info_tr.select("a")[1]["href"].split("=")[1]
-        else:
-            file_uploader=""
-        file_upload_time = info_tr.select("td")[0].get_text().split("上传于")[1]
-        size_text = soup.select("tr.file_info")[3].select("td")[0].get_text()
-        file_size = re.match(r'大小: \n(.*?) \| 文件数', size_text).group(1)
-        tmp = file_size.split(" ")
-        if tmp[1] == "MB":
-            file_size = float(tmp[0]) * 1024
-        elif tmp[1] == "GB":
-            file_size = float(tmp[0]) * 1024 * 1024
-        else:
-            file_size = float(tmp[0])
-        seed_text = soup.select("tr.file_info")[5].select("td")[0].get_text()
-        file_seeding = re.findall(r'\d+', seed_text)[0]
-        file_downloading = re.findall(r'\d+', seed_text)[1]
-        file_downloaded = re.findall(r'\d+', seed_text)[2]
+        user_name = soup.h3.getText().split("[")[0]
+        user_tables = soup.select("td.user_table")
 
-        c.execute('''INSERT INTO FILE (ID,NAME,TORRENT,UPLOADER,UPLOAD_TIME,SEEDING,DOWNLOADED,DOWNLOADING,SIZE)
-VALUES (?,?,?,?,?,?,?,?,?);''',
-                  (file_id, file_name, file_torrent, file_uploader, file_upload_time, file_seeding, file_downloaded,
-                   file_downloading, file_size))
-        print("successfully insert to file")
+        create_time = user_tables[0].getText()
+        last_active = user_tables[1].getText().split("(")[0]
+        privilege = user_tables[2].getText()
+        share_rate = user_tables[4].getText()
+        uploaded = user_tables[5].getText().split(" ")
+        if uploaded[1] == "TB":
+            uploaded_size = float(uploaded[0]) * 1024
+        elif uploaded[1] == "GB":
+            uploaded_size = float(uploaded[0])
+        else:
+            uploaded_size = -1 * float(uploaded[0])
+        downloaded = user_tables[6].getText().split(" ")
+        if downloaded[1] == "TB":
+            downloaded_size = 1024*float(downloaded[0] )
+        elif downloaded[1] == "GB":
+            downloaded_size = float(downloaded[0])
+        else:
+            downloaded_size = -1 * float(downloaded[0])
+        rate = user_tables[7].getText()
+        c.execute('''INSERT INTO USER (UID,NAME,CREATE_TIME,LAST_ACTIVE,PRIVILEGE,SHARE_RATE,DOWNLOADED,UPLOADED,RATE)
+         VALUES (?,?,?,?,?,?,?,?,?);''',
+                  (user_id, user_name, create_time, last_active, privilege, share_rate, downloaded_size,
+                   uploaded_size, rate))
+        print("successfully insert to ser")
         conn.commit()
-
 
 conn = sqlite3.connect('test.db')
 c = conn.cursor()
-count = 89399
-while count != 91105:
-#while count != 18365:
+count = 57865
+while count != 60000:
+    # while count != 18365:
     print(count)
     try:
         get_zijing(count, c)
