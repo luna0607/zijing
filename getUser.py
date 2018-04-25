@@ -9,7 +9,6 @@ Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/a
 DNT: 1
 Accept-Encoding: gzip, deflate
 Accept-Language: zh-CN,zh;q=0.9
-Cookie: hide_filter=1; cookiesession1=2C0BC7512V0LLFHP9BZBQPFI80RDAD37; login="%E6%B1%AA%E6%B1%AA%E5%96%B5"; uid="60371"; md5="%05%3B_%DA%C7J%2F%F2%B5%83%EB(e%CF%BB%26"; per_page="50"
 """
 
 import urllib.request
@@ -18,7 +17,7 @@ import re
 
 import sqlite3
 from bs4 import BeautifulSoup
-
+import my_cookie
 try:
     from BytesIO import BytesIO
 except ImportError:
@@ -31,9 +30,7 @@ def get_zijing(user_id, c):
         # 'accept-encoding': " gzip, deflate",
         'accept-language': 'zh-CN,zh;q=0.9',
         'cache-control': 'no-cache',
-        'cookie': 'hide_filter=1; cookiesession1=2C0BC7512V0LLFHP9BZBQPFI80RDAD37; '
-                  'login="%E6%B1%AA%E6%B1%AA%E5%96%B5"; uid="60371"; md5="%05%3B_%DA%C7J%2F%F2%B5%83%EB(e%CF%BB%26"; '
-                  'per_page="50"',
+        'cookie': my_cookie.my_cookie_string,
         'dnt': '1',
         'pragma': 'no-cache',
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) '
@@ -77,7 +74,7 @@ def get_zijing(user_id, c):
         print("successfully insert to ser")
         conn.commit()
 
-conn = sqlite3.connect('register.db')
+conn = sqlite3.connect('zijing.db')
 c = conn.cursor()
 count = 7799
 while count != 10000:

@@ -8,11 +8,11 @@ import jieba
 
 
 def registerChart():
-    conn = sqlite3.connect('test.db')
+    conn = sqlite3.connect('zijing.db')
     c = conn.cursor()
     c.execute(
         '''SELECT count(*),strftime('%Y-%m-%d',  CREATE_TIME) FROM USER  GROUP BY strftime('%Y-%m-%d',  CREATE_TIME)''')
-    with open('./register', 'w') as f:
+    with open('./files/register', 'w') as f:
         count = 0
         tmp = []
         for row in c:
@@ -24,10 +24,10 @@ def registerChart():
 
 
 def uploadAndDownload():
-    conn = sqlite3.connect('test.db')
+    conn = sqlite3.connect('zijing.db')
     c = conn.cursor()
     c.execute('''SELECT UPLOADED, DOWNLOADED FROM USER''')
-    with open('./uploadAndDownload', 'w') as f:
+    with open('./files/uploadAndDownload', 'w') as f:
         tmp = []
         for row in c:
             word1 = row[0]
@@ -43,14 +43,14 @@ def uploadAndDownload():
 
 
 def getNames():
-    # conn = sqlite3.connect('test.db')
+    # conn = sqlite3.connect('zijing.db')
     # c = conn.cursor()
     # c.execute('''SELECT NAME FROM USER''')
-    # with open('./names', 'w',encoding='utf-8') as f:
+    # with open('./files/names', 'w',encoding='utf-8') as f:
     #     for row in c:
     #         f.write(str(str(row[0]).encode(encoding='UTF-8', errors='strict'), encoding='utf-8'))
     #         f.write(" ")
-    text_from_file_with_apath = open('./names','r',encoding='utf-8').read()
+    text_from_file_with_apath = open('./files/names','r',encoding='utf-8').read()
 
     wordlist_after_jieba = jieba.cut(text_from_file_with_apath, cut_all=True)
     wl_space_split = " ".join(wordlist_after_jieba)
