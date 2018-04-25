@@ -79,7 +79,7 @@ VALUES (?,?,?,?,?,?,?,?,?);''',
         conn.commit()
 
 
-conn = sqlite3.connect('test.db')
+conn = sqlite3.connect('register.db')
 c = conn.cursor()
 count = 58523
 while count != 59277:

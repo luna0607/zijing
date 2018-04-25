@@ -77,7 +77,7 @@ def get_zijing(user_id, c):
         print("successfully insert to ser")
         conn.commit()
 
-conn = sqlite3.connect('test.db')
+conn = sqlite3.connect('register.db')
 c = conn.cursor()
 count = 7799
 while count != 10000:
