@@ -13,9 +13,14 @@
    
    files/register储存了每天注册的用户数量，json格式。
    
+   ![image](https://raw.githubusercontent.com/luna0607/zijing/master/imgs/%E7%B4%AB%E8%8D%86%E6%AF%8F%E6%97%A5%E6%B3%A8%E5%86%8C%E4%BA%BA%E6%95%B0.png)
+
+   
    折线图：http://www.magicluna.me/zijing-register
    
    files/uploadAndDownload储存了每个用户的上传量和下载量，json格式。
+   
+   ![image](https://raw.githubusercontent.com/luna0607/zijing/master/imgs/%E7%B4%AB%E8%8D%86%E7%94%A8%E6%88%B7%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD%E6%95%A3%E7%82%B9%E5%9B%BE.png)
    
    散点图：http://www.magicluna.me/zijing-rate
    
