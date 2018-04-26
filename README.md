@@ -1,5 +1,5 @@
 # 紫荆爬虫 
-   紫荆是南大的pt资源站，包罗万象。官网：http://zijingbt.njuftp.org
+   紫荆是南大的bt资源站，包罗万象。官网：http://zijingbt.njuftp.org
    
    ![image](https://raw.githubusercontent.com/luna0607/zijing/master/imgs/%E7%B4%AB%E8%8D%86%E9%A6%96%E9%A1%B5.png)
    
