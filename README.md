@@ -1,6 +1,8 @@
 # 紫荆爬虫 
-   紫荆官网：http://zijingbt.njuftp.org
+   紫荆是南大的pt资源站，包罗万象。官网：http://zijingbt.njuftp.org
    
+   项目初衷是想看看同学们都喜欢下什么东西，什么样的同学爱分享，什么样的同学下了就跑，紫荆是不是越来越衰败etc.
+ 
    ## 使用：
    zijing.db是sqlite文件，其中FILE表储存了61355条种子信息。
    USER表储存了72265条用户信息。
