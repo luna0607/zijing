@@ -1,7 +1,7 @@
 # 紫荆爬虫 
    紫荆是南大的pt资源站，包罗万象。官网：http://zijingbt.njuftp.org
    
-   ![image](https://github.com/luna0607/zijing/tree/master/imgs/紫荆首页.png)
+   ![image](https://raw.githubusercontent.com/luna0607/zijing/master/imgs/%E7%B4%AB%E8%8D%86%E9%A6%96%E9%A1%B5.png)
    
    项目初衷是想看看同学们都喜欢下什么东西，什么样的同学爱分享，什么样的同学下了就跑，紫荆是不是越来越衰败etc.
  
